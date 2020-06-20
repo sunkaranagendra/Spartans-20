@@ -1,0 +1,135 @@
+Transform the algebraic expression with brackets into RPN form (Reverse Polish Notation). Two-argument operators: +, -, *, /, ^ (priority from the lowest to the highest), brackets ( ). Operands: only letters: a,b,...,z. Assume that there is only one RPN form (no expressions like a*b*c).
+
+Input
+t [the number of expressions <= 100]
+expression [length <= 400]
+[other expressions]
+Text grouped in [ ] does not appear in the input file.
+
+Output
+The expressions in RPN form, one per line.
+Example
+Input:
+3
+(a+(b*c))
+((a+b)*(z+x))
+((a+t)*((b+(a+c))^(c+d)))
+
+Output:
+abc*+
+ab+zx+*
+at+bac++cd+^*
+SOLUTION:[c]
+#include <stdio.h>
+#include<string.h>
+int main(void) {
+ char q[400],stack[400],str[400],ch;
+ int n,top,i,front;
+ scanf("%d",&n);
+ while(n--)
+ {
+ front  = 0;
+ top = 0;
+ scanf("%s ",str);
+ for(i=0;i<strlen(str);i++)
+ {
+           if(str[i]!='+'&&str[i]!='-'&&str[i]!='*'&&str[i]!='/'&&str[i]!='^'&&str[i]!='('&&str[i]!=')')
+           {
+              q[front++] = str[i];
+           }
+           else
+           {
+               if(str[i]=='+')
+               {
+                  while(top>0)
+                  {
+                   ch = stack[top-1];
+                   if(ch != '(')
+                   {
+                      q[front++] = ch;
+                      top--;
+                   }
+                   else
+                     break;
+                  }
+               }
+               else if(str[i]=='-')
+               {
+                  while(top>0)
+                  {
+                   ch = stack[top-1];
+                   if(ch != '+'&&ch != '(')
+                   {
+                       q[front++] = ch;
+                       top--;
+                   }
+                   else
+                      break;
+                  }
+               }
+               else if(str[i]=='*')
+               {
+                  while(top>0)
+                  {
+                   ch = stack[top-1];
+                   if(ch != '+'&&ch != '-'&&ch != '(')
+                   {
+                       q[front++] = ch;
+                       top--;
+                   }
+                   else
+                     break;
+                  }
+               }
+               else if(str[i]=='/')
+               {
+                  while(top>0)
+                  {
+                   ch = stack[top-1];
+                   if(ch != '+'&&ch != '-'&&ch != '*'&&ch != '(')
+                   {
+                       q[front++] = ch;
+                       top--;
+                   }
+                   else
+                     break;
+                  }
+               }
+               else if(str[i]=='^')
+               {
+                  while(top>0)
+                  {
+                   ch = stack[top-1];
+                   if(ch != '+'&&ch != '-'&&ch != '*'&&ch != '/'&&ch != '(')
+                   {
+                       q[front++] = ch;
+                       top--;
+                   }
+                    else
+                      break;
+                  }
+               }
+               else if(str[i]==')')
+               {
+                  while(stack[top-1]!='(')
+                  {
+                   ch = stack[top-1];
+                   q[front++] = ch;
+                   top = top -1;
+                  }
+                  top = top - 1;
+               }
+               if(str[i] !=')')
+                  stack[top++] = str[i];
+           }
+ }
+ while(top>0)
+ {
+    q[front++] =  stack[top-1] ;
+    top = top-1;
+ }
+ q[front] = '\0';
+ printf("%s\n",q);
+ }
+ return 0;
+}
