@@ -1,0 +1,64 @@
+Given an integer A, generate a square matrix filled with elements from 1 to A2 in spiral order.
+
+
+
+Input Format:
+
+The first and the only argument contains an integer, A.
+Output Format:
+
+Return a 2-d matrix of size A x A satisfying the spiral order.
+Constraints:
+
+1 <= A <= 1000
+Examples:
+
+Input 1:
+    A = 3
+
+Output 1:
+    [   [ 1, 2, 3 ],
+        [ 8, 9, 4 ],
+        [ 7, 6, 5 ]   ]
+
+Input 2:
+    4
+
+Output 2:
+    [   [1, 2, 3, 4],
+        [12, 13, 14, 5],
+        [11, 16, 15, 6],
+        [10, 9, 8, 7]   ]
+
+
+
+
+
+solution:
+[python]
+
+class Solution:
+    # @param A : integer
+    # @return a list of list of integers
+    def generateMatrix(self, n):
+        h=n-1
+        l=0
+        a=[[0 for i in range(n)] for j in range(n)]
+        box=int((n+1)/2)
+        c=1
+        for i in range(box):
+            for j in range(l,h+1):
+                a[i][j]=c
+                c+=1
+            for j in range(l+1,h+1):
+                a[j][h]=c
+                c+=1
+            for j in range(h-1,l-1,-1):
+                a[h][j]=c
+                c+=1
+            for j in range(h-1,l,-1):
+                a[j][l]=c
+                c+=1
+            l+=1
+            h-=1
+        return a
