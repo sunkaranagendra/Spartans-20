@@ -32,4 +32,4 @@ class Solution:
                 d[i+j]+=[A[i][j]]
         for i in d:
             ans+=[d[i]]
-        print(ans)
+        return ans
