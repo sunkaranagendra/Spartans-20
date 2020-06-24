@@ -1,0 +1,23 @@
+Given a non-negative number represented as an array of digits,
+
+add 1 to the number ( increment the number represented by the digits ).
+
+The digits are stored such that the most significant digit is at the head of the list.
+
+Example:
+
+If the vector has [1, 2, 3]
+
+the returned vector should be [1, 2, 4]
+
+as 123 + 1 = 124.
+
+solution:[python]
+class Solution:
+    # @param A : list of integers
+    # @return a list of integers
+    def plusOne(self, a):
+         numbstr= [str(i) for i in a]
+         wholenum = int(''.join(numbstr)) + 1
+         outp = [int(i) for i in str(wholenum)]
+         return(outp)
