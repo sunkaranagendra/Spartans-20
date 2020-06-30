@@ -10,20 +10,25 @@ Output : 2
               OR  : (0, 0) -> (1, 0) -> (1, 1)
               
 solution:
-int nCr(long long int n, long long int k)  
-{  
-int res = 1;  
-if ( k > n - k )  
-    k = n - k;  
-for (int i = 0; i < k; ++i){  
-    res *= (n - i);  
-    res /= (i + 1);  
-} 
-return res;  
+int uniquePaths(int a, int b) 
+{
+    int count[a][b];
+    int i,j;
+    for(i=0;i<a;i++)
+    {
+        count[i][0]=1;
+    }
+     for(j=0;j<b;j++)
+    {
+        count[0][j]=1;
+    }
+    for(i=1;i<a;i++)
+    {
+        for(j=1;j<b;j++)
+        {
+            count[i][j]=count[i-1][j]+count[i][j-1];
+        }
+    }
+    return count[a-1][b-1];
 }
-int Solution::uniquePaths(int A, int B){
-int x;
-if(A < B)   x = A;
-else    x = B;
-return nCr(A + B - 2,x - 1) ;
-}
+
