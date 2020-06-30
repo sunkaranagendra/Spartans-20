@@ -1,0 +1,29 @@
+A robot is located at the top-left corner of an A x B grid
+The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked ‘Finish’ in the diagram below).
+
+How many possible unique paths are there?
+
+Input : A = 2, B = 2
+Output : 2
+
+2 possible routes : (0, 0) -> (0, 1) -> (1, 1) 
+              OR  : (0, 0) -> (1, 0) -> (1, 1)
+              
+solution:
+int nCr(long long int n, long long int k)  
+{  
+int res = 1;  
+if ( k > n - k )  
+    k = n - k;  
+for (int i = 0; i < k; ++i){  
+    res *= (n - i);  
+    res /= (i + 1);  
+} 
+return res;  
+}
+int Solution::uniquePaths(int A, int B){
+int x;
+if(A < B)   x = A;
+else    x = B;
+return nCr(A + B - 2,x - 1) ;
+}
