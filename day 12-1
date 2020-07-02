@@ -1,0 +1,39 @@
+Reverse a linked list from position m to n. Do it in-place and in one-pass.
+
+For example:
+Given 1->2->3->4->5->NULL, m = 2 and n = 4,
+
+return 1->4->3->2->5->NULL.
+
+solution:
+ListNode* Solution::reverseBetween(ListNode* A, int B, int C) {
+int i=1;
+ListNode* cur=A;
+ListNode* last; //last element in the starting part that need not be reversed
+ListNode* first; //first element of elements to be reversed
+ListNode* prev=NULL;
+ListNode* next;
+while(i<B)
+{
+last=cur;
+cur=cur->next;
+i++;
+}
+first=cur;
+while(i<=C) //reversing
+{
+next=cur->next;
+cur->next=prev;
+prev=cur;
+cur=next;
+i++;
+}
+first->next=next;
+if(B>1)
+{
+last->next=prev;
+return A;
+}
+else
+return prev;
+}
