@@ -1,0 +1,53 @@
+Merge two sorted linked lists and return it as a new list.
+The new list should be made by splicing together the nodes of the first two lists, and should also be sorted.
+
+For example, given following linked lists :
+
+  5 -> 8 -> 20 
+  4 -> 11 -> 15
+The merged list should be :
+
+4 -> 5 -> 8 -> 11 -> 15 -> 20
+solution:
+ListNode* merge(ListNode* A, ListNode* B) {
+//Recursive store only smaller value thn call merge again with next val of smaller node.
+if(A==NULL)return B;
+if(B==NULL)return A;
+ListNode* ans=NULL;
+if(A->val < B->val){
+ans=A;
+ans->next=merge(A->next,B);
+}
+else{
+ans=B;
+ans->next=merge(A,B->next);
+}
+return ans;
+
+}
+ListNode* sortList(ListNode* A) {
+//divide the list into 2 halves
+if(A==NULL||A->next==NULL)return A;
+ListNode* slow=A;
+ListNode* temp=A;
+ListNode* fast=A;
+while(fast!=NULL && fast->next!=NULL){
+temp = slow;
+slow = slow->next;
+fast=fast->next->next;
+}
+
+temp->next = NULL;
+ListNode* LS = sortList(A);
+ListNode* LR = sortList(slow);
+
+return merge(LS,LR);
+}
+ListNode* Solution::mergeTwoLists(ListNode* A, ListNode* B) {
+ListNode *sort=A;
+while(sort->next!=NULL){
+sort=sort->next;
+}
+sort->next=B;
+return sortList(A);
+}
